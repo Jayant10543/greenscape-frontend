@@ -553,7 +553,7 @@ export default function Home() {
     </div>
   </div>
   <div
-    onClick={() => showToast("🚧 Garden Planner coming in Phase 4!")}
+    onClick={() => router.push("/planner")}
     style={{ background: "#2d7a4a", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
   >
     <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>🗺️</div>
