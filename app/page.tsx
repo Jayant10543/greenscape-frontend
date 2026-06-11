@@ -543,27 +543,27 @@ export default function Home() {
 
       {/* Quick actions */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", padding: "0 12px 32px" }}>
-        <div
-          onClick={() => showToast("🚧 AI Diagnose coming in Phase 3!")}
-          style={{ background: "#1a4d00", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
-        >
-          <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>🔬</div>
-          <div>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#fff" }}>Diagnose a plant</div>
-            <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>Upload photo, get cure</div>
-          </div>
-        </div>
-        <div
-          onClick={() => showToast("🚧 Garden Planner coming in Phase 4!")}
-          style={{ background: "#2d7a4a", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
-        >
-          <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>🗺️</div>
-          <div>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#fff" }}>Plan my garden</div>
-            <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>AI layout designer</div>
-          </div>
-        </div>
-      </div>
+  <div
+    onClick={() => showToast("🚧 AI Diagnose coming in Phase 3!")}
+    style={{ background: "#1a4d00", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
+  >
+    <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>🔬</div>
+    <div>
+      <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff" }}>Diagnose</div>
+      <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)" }}>Upload photo</div>
+    </div>
+  </div>
+  <div
+    onClick={() => showToast("🚧 Garden Planner coming in Phase 4!")}
+    style={{ background: "#2d7a4a", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
+  >
+    <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>🗺️</div>
+    <div>
+      <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff" }}>Garden Planner</div>
+      <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)" }}>AI layout</div>
+    </div>
+  </div>
+</div>
 
       {/* Back to top button */}
       {showBackToTop && (
