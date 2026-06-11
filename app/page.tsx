@@ -235,9 +235,9 @@ export default function Home() {
           </div>
           <div>
             <div className="font-semibold text-white text-sm">GreenScape AI</div>
-            <div className="text-xs" style={{ color: "#a8d878" }}>
-              {user ? `Hi, ${user.name.split(" ")[0]}!` : "Smart plant companion"}
-            </div>
+<div className="text-xs hidden sm:block" style={{ color: "#a8d878" }}>
+  {user ? `Hi, ${user.name.split(" ")[0]}!` : "Smart plant companion"}
+</div>
           </div>
         </div>
 
@@ -399,7 +399,7 @@ export default function Home() {
 
       {/* Skeleton loading */}
       {loading && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px", padding: "0 20px 24px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", padding: "0 12px 24px" }}>
           {[...Array(12)].map((_, i) => (
             <div key={i} style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", overflow: "hidden" }}>
               <div style={{ height: "160px", background: "linear-gradient(90deg, #e8f5e0 25%, #d4edcc 50%, #e8f5e0 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.5s infinite" }} />
@@ -443,7 +443,7 @@ export default function Home() {
 
       {/* Plant grid */}
       {!loading && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px", padding: "0 20px 24px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", padding: "0 12px 24px" }}>
           {filtered.slice(0, visibleCount).map((plant) => (
             <div
               key={plant._id}
@@ -542,7 +542,7 @@ export default function Home() {
       )}
 
       {/* Quick actions */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", padding: "0 20px 32px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", padding: "0 12px 32px" }}>
         <div
           onClick={() => showToast("🚧 AI Diagnose coming in Phase 3!")}
           style={{ background: "#1a4d00", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
