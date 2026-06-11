@@ -229,18 +229,17 @@ export default function Home() {
 
       {/* Navbar */}
       <nav style={{ background: "#1a4d00" }} className="px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg" style={{ background: "#4CAF50" }}>
-            🌿
-          </div>
-          <div>
-            <div className="font-semibold text-white text-sm">GreenScape AI</div>
-<div className="text-xs hidden sm:block" style={{ color: "#a8d878" }}>
-  {user ? `Hi, ${user.name.split(" ")[0]}!` : "Smart plant companion"}
+        <div className="flex items-center gap-2">
+  <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base" style={{ background: "#4CAF50", flexShrink: 0 }}>
+    🌿
+  </div>
+  <div style={{ whiteSpace: "nowrap" }}>
+    <div className="font-semibold text-white" style={{ fontSize: "13px" }}>GreenScape AI</div>
+    <div className="hidden sm:block" style={{ color: "#a8d878", fontSize: "11px" }}>
+      {user ? `Hi, ${user.name.split(" ")[0]}!` : "Smart plant companion"}
+    </div>
+  </div>
 </div>
-          </div>
-        </div>
-
         <div className="flex items-center gap-2">
           <span
             onClick={() => showToast("🚧 AI Diagnose coming in Phase 3!")}
@@ -261,11 +260,11 @@ export default function Home() {
             🗺️ Planner
           </span>
           <button
-            onClick={() => router.push("/profile")}
-            style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "none", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", cursor: "pointer" }}
-          >
-            {user?.name?.split(" ")[0]} 👤
-          </button>
+  onClick={() => router.push("/profile")}
+  style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "none", borderRadius: "20px", padding: "6px 10px", fontSize: "12px", cursor: "pointer", whiteSpace: "nowrap" }}
+>
+  👤
+</button>
         </div>
       </nav>
 
