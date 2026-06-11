@@ -2,7 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API_URL = "http://localhost:5000/api/plants";
+const API_URL = "https://greenscape-backend-jyc2.onrender.com/api/plants";
 
 export default function PlantDetail() {
   const { name } = useParams();
@@ -27,7 +27,7 @@ export default function PlantDetail() {
         setLoading(false);
         const token = localStorage.getItem("token");
         if (token) {
-          fetch("http://localhost:5000/api/auth/profile", {
+          fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/profile", {
             headers: { Authorization: `Bearer ${token}` }
           })
             .then(r => r.json())
@@ -45,7 +45,7 @@ export default function PlantDetail() {
     setSaveLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/auth/save-plant", {
+      const res = await fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/save-plant", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

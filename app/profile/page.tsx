@@ -21,7 +21,7 @@ export default function Profile() {
     const token = localStorage.getItem("token");
     if (!token) { router.push("/login"); return; }
 
-    fetch("http://localhost:5000/api/auth/profile", {
+    fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/profile", {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -32,7 +32,7 @@ export default function Profile() {
 
         if (data.savedPlants && data.savedPlants.length > 0) {
           const plantPromises = data.savedPlants.map((id: string) =>
-            fetch(`http://localhost:5000/api/plants/id/${id}`).then(r => r.json())
+            fetch(`https://greenscape-backend-jyc2.onrender.com/api/plants/id/${id}`).then(r => r.json())
           );
           const plants = await Promise.all(plantPromises);
           setSavedPlants(plants.filter(p => !p.error));
@@ -43,7 +43,7 @@ export default function Profile() {
   const handleSave = async () => {
     setLoading(true);
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/api/auth/profile", {
+    const res = await fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default function Profile() {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    const res = await fetch("http://localhost:5000/api/auth/save-plant", {
+    const res = await fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/save-plant", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

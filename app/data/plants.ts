@@ -165,4 +165,4 @@ export const plants = [
     description: "Sacred tree in Hindu and Buddhist traditions with important medicinal properties."
   },
 ];
-export const API_URL = "http://localhost:5000/api/plants";
+export const API_URL = "https://greenscape-backend-jyc2.onrender.com/api/plants";

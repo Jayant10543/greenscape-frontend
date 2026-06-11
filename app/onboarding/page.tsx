@@ -60,7 +60,7 @@ export default function Onboarding() {
       setLoading(true);
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/api/auth/profile", {
+        const res = await fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/profile", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

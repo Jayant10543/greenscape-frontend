@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const API_URL = "http://localhost:5000/api/plants";
-const WEATHER_URL = "http://localhost:5000/api/weather";
+const API_URL = "https://greenscape-backend-jyc2.onrender.com/api/plants";
+const WEATHER_URL = "https://greenscape-backend-jyc2.onrender.com/api/weather";
 const categories = ["All", "Herb", "Flower", "Tree", "Indoor", "Fruit"];
 
 export default function Home() {
@@ -75,7 +75,7 @@ export default function Home() {
         async (position) => {
           const { latitude, longitude } = position.coords;
           const res = await fetch(
-            `http://localhost:5000/api/weather/coords?lat=${latitude}&lon=${longitude}`
+            `https://greenscape-backend-jyc2.onrender.com/api/weather/coords?lat=${latitude}&lon=${longitude}`
           );
           const data = await res.json();
           setWeather(data);
@@ -115,7 +115,7 @@ export default function Home() {
     const alreadySaved = savedPlants.includes(plantId);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/save-plant", {
+      const res = await fetch("https://greenscape-backend-jyc2.onrender.com/api/auth/save-plant", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
