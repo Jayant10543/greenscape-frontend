@@ -39,69 +39,33 @@ export default function Planner() {
     setError("");
 
     try {
-      const prompt = `You are an expert Indian garden landscape designer. Create a detailed garden layout plan for the following:
-
-Plot Size: ${length} x ${width} feet (${parseInt(length) * parseInt(width)} sq ft)
-Garden Type: ${gardenType}
-Plant Preference: ${preference}
-Budget: ${budget}
-Location: India (tropical/subtropical climate)
-
-Please provide a comprehensive garden plan in the following JSON format only, no other text:
-{
-  "summary": "2-3 sentence overview of the garden plan",
-  "zones": [
-    {
-      "name": "Zone name",
-      "emoji": "relevant emoji",
-      "area": "area in sq ft",
-      "description": "what goes here",
-      "plants": ["plant1", "plant2", "plant3"]
-    }
-  ],
-  "plantList": [
-    {
-      "name": "Plant name",
-      "quantity": "number",
-      "spacing": "spacing in feet",
-      "season": "best season to plant",
-      "care": "one line care tip"
-    }
-  ],
-  "monthlyCalendar": {
-    "Jan-Feb": "what to do",
-    "Mar-Apr": "what to do",
-    "May-Jun": "what to do",
-    "Jul-Aug": "what to do",
-    "Sep-Oct": "what to do",
-    "Nov-Dec": "what to do"
-  },
-  "tips": ["tip1", "tip2", "tip3", "tip4"],
-  "estimatedCost": "cost range in INR",
-  "wateringSchedule": "watering frequency and amount"
-}`;
-
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("https://greenscape-backend-jyc2.onrender.com/api/planner/generate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-allow-browser": "true",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 2000,
-          messages: [{ role: "user", content: prompt }],
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ length, width, gardenType, preference, budget }),
       });
 
-      const data = await response.json();
-      const text = data.content[0].text;
-      const clean = text.replace(/```json|```/g, "").trim();
-      const parsed = JSON.parse(clean);
+      const parsed = await response.json();
+      if (parsed.error) throw new Error(parsed.error);
       setResult(parsed);
       setStep(4);
+    } catch (err) {
+      console.error("Planner error:", err);
+      setError("Failed to generate plan. Please try again.");
+    }
+    setLoading(false);
+  };
+
+     const response = await fetch("https://greenscape-backend-jyc2.onrender.com/api/planner/generate", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ length, width, gardenType, preference, budget }),
+});
+
+const parsed = await response.json();
+if (parsed.error) throw new Error(parsed.error);
+setResult(parsed);
+setStep(4);
     } catch (err) {
       setError("Failed to generate plan. Please try again.");
     }
