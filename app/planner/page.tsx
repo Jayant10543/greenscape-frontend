@@ -56,22 +56,6 @@ export default function Planner() {
     setLoading(false);
   };
 
-     const response = await fetch("https://greenscape-backend-jyc2.onrender.com/api/planner/generate", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ length, width, gardenType, preference, budget }),
-});
-
-const parsed = await response.json();
-if (parsed.error) throw new Error(parsed.error);
-setResult(parsed);
-setStep(4);
-    } catch (err) {
-      setError("Failed to generate plan. Please try again.");
-    }
-    setLoading(false);
-  };
-
   return (
     <main style={{ minHeight: "100vh", background: "#f4f9f0" }}>
 
