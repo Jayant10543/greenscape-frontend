@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const gardenTypes = [
@@ -33,6 +33,20 @@ export default function Planner() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
+  const [user, setUser] = useState<any>(null);
+  const [weather, setWeather] = useState<any>(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const u = JSON.parse(savedUser);
+      setUser(u);
+      fetch(`https://greenscape-backend-jyc2.onrender.com/api/weather/${u.city || "Agra"}`)
+        .then(r => r.json())
+        .then(setWeather)
+        .catch(() => {});
+    }
+  }, []);
 
   const generatePlan = async () => {
     setLoading(true);
@@ -42,7 +56,7 @@ export default function Planner() {
       const response = await fetch("https://greenscape-backend-jyc2.onrender.com/api/planner/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ length, width, gardenType, preference, budget }),
+        body: JSON.stringify({ length, width, gardenType, preference, budget, city: user?.city, soilType: user?.soilType, weather }),
       });
 
       const parsed = await response.json();
@@ -76,6 +90,17 @@ export default function Planner() {
             <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#1a4d00", marginBottom: "8px" }}>What's your plot size?</h2>
             <p style={{ fontSize: "14px", color: "#5a8a3a" }}>Enter the length and width of your garden space</p>
           </div>
+
+          {/* Location info banner */}
+          {user?.city && (
+            <div style={{ background: "#EAF3DE", borderRadius: "12px", padding: "10px 14px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ fontSize: "16px" }}>📍</span>
+              <span style={{ fontSize: "13px", color: "#1a4d00", fontWeight: 500 }}>
+                Planning for {user.city}
+                {weather ? ` · ${weather.temperature}°C, ${weather.description}` : ""}
+              </span>
+            </div>
+          )}
 
           <div style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", padding: "20px", marginBottom: "20px" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px" }}>
@@ -229,7 +254,9 @@ export default function Planner() {
             <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a4d00", marginBottom: "8px" }}>📋 Your garden plan summary:</p>
             <p style={{ fontSize: "12px", color: "#5a8a3a", marginBottom: "4px" }}>📐 Plot: {length} x {width} ft ({parseInt(length) * parseInt(width)} sq ft)</p>
             <p style={{ fontSize: "12px", color: "#5a8a3a", marginBottom: "4px" }}>🏡 Type: {gardenType}</p>
-            <p style={{ fontSize: "12px", color: "#5a8a3a" }}>🌿 Preference: {preference}</p>
+            <p style={{ fontSize: "12px", color: "#5a8a3a", marginBottom: "4px" }}>🌿 Preference: {preference}</p>
+            {user?.city && <p style={{ fontSize: "12px", color: "#5a8a3a", marginBottom: "4px" }}>📍 Location: {user.city}</p>}
+            {weather && <p style={{ fontSize: "12px", color: "#5a8a3a" }}>🌡️ Weather: {weather.temperature}°C, {weather.description}</p>}
           </div>
 
           <button
