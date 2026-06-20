@@ -31,6 +31,7 @@ export default function Planner() {
   const [preference, setPreference] = useState("");
   const [budget, setBudget] = useState("");
   const [loading, setLoading] = useState(false);
+  const [slowLoading, setSlowLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
   const [user, setUser] = useState<any>(null);
@@ -47,6 +48,15 @@ export default function Planner() {
         .catch(() => {});
     }
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      setSlowLoading(false);
+      return;
+    }
+    const timer = setTimeout(() => setSlowLoading(true), 8000);
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   const generatePlan = async () => {
     setLoading(true);
@@ -73,7 +83,6 @@ export default function Planner() {
   return (
     <main style={{ minHeight: "100vh", background: "#f4f9f0" }}>
 
-      {/* Navbar */}
       <nav style={{ background: "#1a4d00", padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <button onClick={() => router.push("/")} style={{ color: "#a8d878", fontSize: "14px", background: "none", border: "none", cursor: "pointer" }}>
           ← Back
@@ -82,7 +91,6 @@ export default function Planner() {
         <div style={{ width: "60px" }} />
       </nav>
 
-      {/* Step 1 — Plot size */}
       {step === 1 && (
         <div style={{ padding: "24px 20px" }}>
           <div style={{ textAlign: "center", marginBottom: "28px" }}>
@@ -91,7 +99,6 @@ export default function Planner() {
             <p style={{ fontSize: "14px", color: "#5a8a3a" }}>Enter the length and width of your garden space</p>
           </div>
 
-          {/* Location info banner */}
           {user?.city && (
             <div style={{ background: "#EAF3DE", borderRadius: "12px", padding: "10px 14px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ fontSize: "16px" }}>📍</span>
@@ -151,7 +158,6 @@ export default function Planner() {
         </div>
       )}
 
-      {/* Step 2 — Garden type + preference */}
       {step === 2 && (
         <div style={{ padding: "24px 20px" }}>
           <div style={{ textAlign: "center", marginBottom: "24px" }}>
@@ -215,7 +221,6 @@ export default function Planner() {
         </div>
       )}
 
-      {/* Step 3 — Budget */}
       {step === 3 && (
         <div style={{ padding: "24px 20px" }}>
           <div style={{ textAlign: "center", marginBottom: "28px" }}>
@@ -249,7 +254,6 @@ export default function Planner() {
             ))}
           </div>
 
-          {/* Summary */}
           <div style={{ background: "#EAF3DE", borderRadius: "14px", padding: "16px", marginBottom: "20px" }}>
             <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a4d00", marginBottom: "8px" }}>📋 Your garden plan summary:</p>
             <p style={{ fontSize: "12px", color: "#5a8a3a", marginBottom: "4px" }}>📐 Plot: {length} x {width} ft ({parseInt(length) * parseInt(width)} sq ft)</p>
@@ -280,24 +284,27 @@ export default function Planner() {
             ) : "Generate My Garden Plan 🌿"}
           </button>
 
+          {loading && slowLoading && (
+            <p style={{ color: "#5a8a3a", fontSize: "12px", textAlign: "center", marginTop: "10px" }}>
+              🌙 Server may be waking up after inactivity — this can take up to a minute on first use.
+            </p>
+          )}
+
           {error && (
             <p style={{ color: "#993C1D", fontSize: "13px", textAlign: "center", marginTop: "12px" }}>⚠️ {error}</p>
           )}
         </div>
       )}
 
-      {/* Step 4 — Results */}
       {step === 4 && result && (
         <div style={{ padding: "20px" }}>
 
-          {/* Header */}
           <div style={{ background: "#1a4d00", borderRadius: "16px", padding: "20px", marginBottom: "16px", textAlign: "center" }}>
             <div style={{ fontSize: "36px", marginBottom: "8px" }}>🌿</div>
             <h2 style={{ color: "#fff", fontSize: "18px", fontWeight: 700, marginBottom: "8px" }}>Your Garden Plan is Ready!</h2>
             <p style={{ color: "#a8d878", fontSize: "13px", lineHeight: 1.6 }}>{result.summary}</p>
           </div>
 
-          {/* Stats */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
             <div style={{ background: "#fff", borderRadius: "12px", border: "1.5px solid #e0f0c8", padding: "14px", textAlign: "center" }}>
               <div style={{ fontSize: "20px", fontWeight: 700, color: "#1a4d00" }}>{length}×{width} ft</div>
@@ -309,7 +316,6 @@ export default function Planner() {
             </div>
           </div>
 
-          {/* Zones */}
           <div style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", padding: "16px", marginBottom: "16px" }}>
             <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a4d00", marginBottom: "14px" }}>🗺️ Garden Zones</p>
             {result.zones?.map((zone: any, i: number) => (
@@ -329,7 +335,6 @@ export default function Planner() {
             ))}
           </div>
 
-          {/* Plant list */}
           <div style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", padding: "16px", marginBottom: "16px" }}>
             <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a4d00", marginBottom: "14px" }}>🌱 Plant List</p>
             {result.plantList?.map((plant: any, i: number) => (
@@ -346,7 +351,6 @@ export default function Planner() {
             ))}
           </div>
 
-          {/* Monthly calendar */}
           <div style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", padding: "16px", marginBottom: "16px" }}>
             <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a4d00", marginBottom: "14px" }}>📅 Planting Calendar</p>
             {result.monthlyCalendar && Object.entries(result.monthlyCalendar).map(([month, activity]: [string, any]) => (
@@ -357,7 +361,6 @@ export default function Planner() {
             ))}
           </div>
 
-          {/* Tips */}
           <div style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", padding: "16px", marginBottom: "16px" }}>
             <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a4d00", marginBottom: "12px" }}>💡 Expert Tips</p>
             {result.tips?.map((tip: string, i: number) => (
@@ -368,7 +371,6 @@ export default function Planner() {
             ))}
           </div>
 
-          {/* Watering */}
           <div style={{ background: "#EAF3DE", borderRadius: "14px", padding: "14px", marginBottom: "20px", display: "flex", gap: "10px", alignItems: "flex-start" }}>
             <span style={{ fontSize: "20px" }}>💧</span>
             <div>
@@ -377,7 +379,6 @@ export default function Planner() {
             </div>
           </div>
 
-          {/* Buttons */}
           <button
             onClick={() => { setStep(1); setResult(null); setLength(""); setWidth(""); setGardenType(""); setPreference(""); setBudget(""); }}
             style={{ width: "100%", padding: "14px", background: "#fff", color: "#1a4d00", border: "2px solid #1a4d00", borderRadius: "14px", fontSize: "14px", fontWeight: 600, cursor: "pointer", marginBottom: "10px" }}
