@@ -174,7 +174,11 @@ export default function Diagnose() {
             <div style={{ display: "grid", gridTemplateColumns: result.severity ? "1fr 1fr 1fr" : "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
               <div style={{ background: "#fff", borderRadius: "12px", border: "1.5px solid #e0f0c8", padding: "12px", textAlign: "center" }}>
                 <div style={{ fontSize: "13px", fontWeight: 700, color: "#1a4d00" }}>{result.plantIdentified}</div>
-                <div style={{ fontSize: "11px", color: "#5a8a3a", marginTop: "2px" }}>Plant</div>
+                <div style={{ fontSize: "11px", color: "#5a8a3a", marginTop: "2px" }}>
+                  {result.plantIdentificationConfidence && result.plantIdentificationConfidence !== "High"
+                    ? `Plant (${result.plantIdentificationConfidence} confidence)`
+                    : "Plant"}
+                </div>
               </div>
               <div style={{ background: "#fff", borderRadius: "12px", border: "1.5px solid #e0f0c8", padding: "12px", textAlign: "center" }}>
                 <div style={{ fontSize: "13px", fontWeight: 700, color: "#1a4d00" }}>{result.confidence}</div>
