@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Diagnose() {
@@ -13,18 +13,66 @@ export default function Diagnose() {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [compressing, setCompressing] = useState(false);
+  const [slowLoading, setSlowLoading] = useState(false);
+
+  useEffect(() => {
+    if (!loading) {
+      setSlowLoading(false);
+      return;
+    }
+    const timer = setTimeout(() => setSlowLoading(true), 8000);
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  const compressImage = (file: File, maxDimension = 1200, quality = 0.8): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > height && width > maxDimension) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else if (height > maxDimension) {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return reject(new Error("Canvas not supported"));
+          ctx.drawImage(img, 0, 0, width, height);
+
+          resolve(canvas.toDataURL("image/jpeg", quality));
+        };
+        img.onerror = () => reject(new Error("Failed to load image"));
+        img.src = reader.result as string;
+      };
+      reader.onerror = () => reject(new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setMediaType(file.type || "image/jpeg");
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      setPreview(result);
-      setImageData(result.split(",")[1]);
-    };
-    reader.readAsDataURL(file);
+    setCompressing(true);
+    setError("");
+    try {
+      const compressedDataUrl = await compressImage(file);
+      setMediaType("image/jpeg");
+      setPreview(compressedDataUrl);
+      setImageData(compressedDataUrl.split(",")[1]);
+    } catch (err) {
+      console.error("Image compression failed:", err);
+      setError("Couldn't process that image. Please try a different photo.");
+    }
+    setCompressing(false);
   };
 
   const analyzePlant = async () => {
@@ -80,14 +128,19 @@ export default function Diagnose() {
             </div>
 
             <div
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() => !compressing && fileInputRef.current?.click()}
               style={{
                 background: "#fff", borderRadius: "16px", border: "2px dashed #c6e8a0",
                 padding: preview ? "12px" : "40px 20px", marginBottom: "16px",
-                textAlign: "center", cursor: "pointer",
+                textAlign: "center", cursor: compressing ? "default" : "pointer",
               }}
             >
-              {preview ? (
+              {compressing ? (
+                <>
+                  <div style={{ fontSize: "36px", marginBottom: "8px" }}>⏳</div>
+                  <p style={{ fontSize: "14px", color: "#1a4d00", fontWeight: 600 }}>Processing photo...</p>
+                </>
+              ) : preview ? (
                 <img src={preview} alt="Plant preview" style={{ width: "100%", borderRadius: "12px", maxHeight: "300px", objectFit: "cover" as const }} />
               ) : (
                 <>
@@ -129,7 +182,7 @@ export default function Diagnose() {
 
             <button
               onClick={analyzePlant}
-              disabled={!imageData || loading}
+              disabled={!imageData || loading || compressing}
               style={{
                 width: "100%", padding: "15px",
                 background: imageData ? "#1a4d00" : "#c6e8a0",
@@ -147,6 +200,12 @@ export default function Diagnose() {
                 </>
               ) : "Diagnose Plant 🔬"}
             </button>
+
+            {loading && slowLoading && (
+              <p style={{ color: "#5a8a3a", fontSize: "12px", textAlign: "center", marginTop: "10px" }}>
+                🌙 Server may be waking up after inactivity — this can take up to a minute on first use.
+              </p>
+            )}
 
             {error && (
               <p style={{ color: "#993C1D", fontSize: "13px", textAlign: "center", marginTop: "12px" }}>⚠️ {error}</p>
