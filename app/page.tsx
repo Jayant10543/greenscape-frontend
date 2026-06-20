@@ -543,7 +543,7 @@ export default function Home() {
       {/* Quick actions */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", padding: "0 12px 32px" }}>
   <div
-    onClick={() => showToast("🚧 AI Diagnose coming in Phase 3!")}
+    onClick={() => router.push("/diagnose")}
     style={{ background: "#1a4d00", borderRadius: "16px", padding: "16px", display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
   >
     <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>🔬</div>
