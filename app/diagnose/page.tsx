@@ -82,9 +82,13 @@ export default function Diagnose() {
     setResult(null);
 
     try {
+      const token = localStorage.getItem("token");
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
       const response = await fetch("https://greenscape-backend-jyc2.onrender.com/api/diagnose/analyze", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ image: imageData, mediaType, plantName }),
       });
 
