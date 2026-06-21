@@ -242,7 +242,7 @@ export default function Home() {
 </div>
         <div className="flex items-center gap-2">
           <span
-            onClick={() => showToast("🚧 AI Diagnose coming in Phase 3!")}
+            onClick={() => router.push("/diagnose")}
             className="text-sm px-4 py-1.5 rounded-full cursor-pointer"
             style={{ color: "#c8e8a0", transition: "background 0.2s" }}
             onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
@@ -251,7 +251,7 @@ export default function Home() {
             🔬 Diagnose
           </span>
           <span
-            onClick={() => showToast("🚧 Garden Planner coming in Phase 4!")}
+            onClick={() => router.push("/planner")}
             className="text-sm px-4 py-1.5 rounded-full cursor-pointer"
             style={{ color: "#c8e8a0", transition: "background 0.2s" }}
             onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
