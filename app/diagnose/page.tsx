@@ -114,7 +114,9 @@ export default function Diagnose() {
           ← Back
         </button>
         <span style={{ color: "#fff", fontWeight: 600, fontSize: "15px" }}>🔬 AI Diagnose</span>
-        <div style={{ width: "60px" }} />
+        <button onClick={() => router.push("/diagnose/history")} style={{ color: "#a8d878", fontSize: "13px", background: "none", border: "none", cursor: "pointer" }}>
+          📜 History
+        </button>
       </nav>
 
       <div style={{ padding: "24px 20px" }}>
