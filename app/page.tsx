@@ -368,7 +368,7 @@ export default function Home() {
 
                   <div onClick={() => plant._id && router.push(`/plant/${plant._id}`)} style={{ height: "150px", overflow: "hidden", position: "relative" }}>
                     {plant.image ? (
-                      <img src={plant.image} alt={plant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} referrerPolicy="no-referrer" />
+                      <img src={plant.image} alt={plant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} referrerPolicy="no-referrer-when-downgrade" />
                     ) : (
                       <div style={{ width: "100%", height: "100%", background: "rgba(184,242,60,0.08)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <Sprout size={32} color="var(--gs-lime)" />

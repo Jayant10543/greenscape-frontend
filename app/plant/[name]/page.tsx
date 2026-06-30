@@ -146,7 +146,7 @@ export default function PlantDetail() {
       {/* Hero image */}
       <div style={{ height: "240px", overflow: "hidden", position: "relative" }}>
         {plant.image ? (
-          <img src={plant.image} alt={plant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} referrerPolicy="no-referrer" />
+          <img src={plant.image} alt={plant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} referrerPolicy="no-referrer-when-downgrade" />
         ) : (
           <div style={{ width: "100%", height: "100%", background: "#2d6e00", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "80px" }}>🌿</div>
         )}
