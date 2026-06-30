@@ -3,6 +3,26 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* ---- GreenScape design tokens ---- */
+  --gs-bg-1: #0F2E0A;
+  --gs-bg-2: #0A2206;
+  --gs-glass: rgba(255, 255, 255, 0.05);
+  --gs-glass-strong: rgba(255, 255, 255, 0.08);
+  --gs-border: rgba(255, 255, 255, 0.10);
+  --gs-border-strong: rgba(255, 255, 255, 0.16);
+  --gs-text-1: #F3F6F1;
+  --gs-text-2: #A9B5A8;
+  --gs-text-3: #6E7B6C;
+  --gs-lime: #B8F23C;
+  --gs-lime-deep: #8FCB1F;
+  --gs-emerald: #2FD180;
+  --gs-amber: #FFB454;
+  --gs-red: #FF6B6B;
+  --gs-radius-sm: 10px;
+  --gs-radius-md: 14px;
+  --gs-radius-lg: 20px;
+  --gs-radius-pill: 100px;
 }
 
 @theme inline {
@@ -23,4 +43,109 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---- GreenScape shared component classes ---- */
+.gs-app {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 900px 600px at 85% -10%, rgba(184, 242, 60, 0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 0% 100%, rgba(47, 209, 128, 0.08), transparent 55%),
+    linear-gradient(180deg, var(--gs-bg-1), var(--gs-bg-2));
+  font-family: 'Manrope', sans-serif;
+  color: var(--gs-text-1);
+}
+
+.gs-glass-card {
+  background: var(--gs-glass);
+  border: 1px solid var(--gs-border);
+  border-radius: var(--gs-radius-lg);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.gs-btn-primary {
+  background: linear-gradient(135deg, var(--gs-lime), var(--gs-lime-deep));
+  color: #0B1410;
+  border: none;
+  border-radius: var(--gs-radius-sm);
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(184, 242, 60, 0.20);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.gs-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(184, 242, 60, 0.28);
+}
+.gs-btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.gs-btn-secondary {
+  background: var(--gs-glass);
+  border: 1px solid var(--gs-border-strong);
+  color: var(--gs-text-1);
+  border-radius: var(--gs-radius-sm);
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  transition: background 0.15s;
+}
+.gs-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.gs-input {
+  background: var(--gs-glass);
+  border: 1px solid var(--gs-border);
+  border-radius: var(--gs-radius-sm);
+  color: var(--gs-text-1);
+  font-family: 'Manrope', sans-serif;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gs-input::placeholder {
+  color: var(--gs-text-3);
+}
+.gs-input:focus {
+  border-color: var(--gs-lime);
+  background: var(--gs-glass-strong);
+}
+
+.gs-pill-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--gs-glass);
+  border: 1px solid var(--gs-border);
+  border-radius: var(--gs-radius-pill);
+  padding: 4px;
+  backdrop-filter: blur(20px);
+}
+.gs-pill-nav a, .gs-pill-nav button {
+  font-size: 13.5px;
+  color: var(--gs-text-2);
+  text-decoration: none;
+  padding: 9px 18px;
+  border-radius: var(--gs-radius-pill);
+  transition: all 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+  background: none;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+}
+.gs-pill-nav a:hover, .gs-pill-nav button:hover {
+  color: var(--gs-text-1);
+  background: rgba(255, 255, 255, 0.06);
+}
+.gs-pill-nav a.active, .gs-pill-nav button.active {
+  color: #0B1410;
+  background: var(--gs-lime);
 }
