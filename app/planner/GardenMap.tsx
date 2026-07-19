@@ -85,17 +85,17 @@ export default function GardenMap({
   const shell = (inner: React.ReactNode, note?: string) => (
     <div
       style={{
-        background: "#fff",
+        background: "var(--gs-glass)",
         borderRadius: "16px",
-        border: "1.5px solid #e0f0c8",
+        border: "1px solid var(--gs-border)",
         padding: "16px",
         marginBottom: "16px",
       }}
     >
-      <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a4d00", marginBottom: "4px" }}>
+      <p style={{ fontSize: "14px", fontWeight: 700, color: "var(--gs-text-1)", marginBottom: "4px" }}>
         🗺️ Garden Layout Map
       </p>
-      <p style={{ fontSize: "11px", color: "#888", marginBottom: "14px" }}>
+      <p style={{ fontSize: "11px", color: "var(--gs-text-3)", marginBottom: "14px" }}>
         Top-down view · {lengthNum || "?"} × {widthNum || "?"} ft
         {useGrid ? " · designed layout" : " · box size reflects each zone's area"}
       </p>
@@ -115,7 +115,7 @@ export default function GardenMap({
           return (
             <div
               key={idx}
-              style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "11px", color: "#444" }}
+              style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "11px", color: "var(--gs-text-2)" }}
             >
               <span
                 style={{
@@ -134,7 +134,7 @@ export default function GardenMap({
         })}
       </div>
       {note && (
-        <p style={{ fontSize: "10px", color: "#b0894a", textAlign: "center", marginTop: "10px" }}>
+        <p style={{ fontSize: "10px", color: "var(--gs-amber)", textAlign: "center", marginTop: "10px" }}>
           {note}
         </p>
       )}
@@ -192,10 +192,10 @@ export default function GardenMap({
           maxWidth: "100%",
           height: CANVAS_H + "px",
           margin: "0 auto",
-          border: "2px dashed #1a4d00",
+          border: "2px dashed var(--gs-lime-deep)",
           borderRadius: "10px",
           overflow: "hidden",
-          background: "#f4f9f0",
+          background: "rgba(0,0,0,0.25)",
         }}
       >
         {zones.map((zone, idx) => {
@@ -244,12 +244,12 @@ export default function GardenMap({
         maxWidth: "100%",
         height: CANVAS_H + "px",
         margin: "0 auto",
-        border: "2px dashed #1a4d00",
+        border: "2px dashed var(--gs-lime-deep)",
         borderRadius: "10px",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        background: "#f4f9f0",
+        background: "rgba(0,0,0,0.25)",
       }}
     >
       {rows.map((row, r) => {
