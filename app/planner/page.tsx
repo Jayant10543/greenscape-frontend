@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import GardenMap from "./GardenMap";
 
 const gardenTypes = [
   { label: "Home Garden", emoji: "🏡", sub: "Outdoor space" },
@@ -315,6 +316,8 @@ export default function Planner() {
               <div style={{ fontSize: "11px", color: "#5a8a3a", marginTop: "2px" }}>Estimated cost</div>
             </div>
           </div>
+
+<GardenMap zones={result.zones || []} length={length} width={width} />
 
           <div style={{ background: "#fff", borderRadius: "16px", border: "1.5px solid #e0f0c8", padding: "16px", marginBottom: "16px" }}>
             <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a4d00", marginBottom: "14px" }}>🗺️ Garden Zones</p>
